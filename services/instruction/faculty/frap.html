@@ -1,0 +1,199 @@
+---
+title:
+layout: page
+--- 
+
+<!-- -->
+<!-- header -->
+<body>
+<p class="hide"><a href="#content">Skip navigation</a>.</p>
+<div id="pagewrapper1" class="level2">
+  <div id="pagewrapper2" class="UImoss">
+    <div id="banner">
+      <div id="bannertop">
+        <div id="bannerleft"><a href="/index.html" title="University of Idaho Library"><img id="ctl00_imgLogo" src="/images/library_logo.gif" alt="University of Idaho Library" style="border-width:0px;" /></a></div>
+        <div id="bannerright">
+          <p><a href="http://www.uidaho.edu/" title="A-Z Index">UNIVERSITY OF IDAHO HOME</a></p>
+        </div>
+      </div>
+      <!-- -->
+      <!-- navigation bar -->
+      <div id="globalnav1">
+        <div id="globalnav2">
+          <div id="globalnav3"> 
+            <!-- Global Navigation - services --> 
+            <!--#include virtual="/old/nav_services.txt" --> 
+            <!-- Global Navigation - services --> 
+          </div>
+        </div>
+      </div>
+      </div>
+      <div id="bannerbottom1">
+        <div id="bannerbottom2"> </div>
+      </div>
+    </div>
+    <!-- -->
+    <!-- left navigation -->
+    <div id="audience1" class="twocolumn">
+      <div id="audience2">
+        <div id="audienceleft1">
+          <ul id="udm" class="udm" style="position:relative; z-index: 1;">
+            <li class="onclick(true)" title="Library Services" id="services"><a href="/services/index.html" class="udmY">Library Services</a></li>
+            <li class="onclick(true)" title="Information about Borrowing and Renewing Books" id="borrow"><a href="/services/borrow/index.html">Borrow/Renew</a></li>
+            <li class="onclick(true)" title="Course Reserve" id="reserve"><a href="/services/reserve/index.html">Course Reserve</a></li>
+            <li class="onclick(true)" title="Interlibrary Loan" id="ILL"><a href="/services/ill/index.html">Interlibrary Loan</a></li>
+            <li class="onclick(true)" title="Instruction and Tours" id="instruction"><a href="/services/instruction.html">Tours</a></li>
+            <li class="onclick(true)" title="Research Guides and Tutorials" id="guides"><a href="/classes/guides.html">Research Guides</a></li>
+          </ul>
+          <div id="audiencenavleft2">  
+            <!-- Ask Us Menu-->
+            <!--#include virtual="/askus.txt" -->
+              <!-- Ask Us Menu -->
+          </div>
+        </div>
+        <!-- -->
+        <div id="audienceright1">
+          <div class="audiencerightsection1">
+            <div class="audiencerightcol1">
+              <?php
+  require ("library.inc.php") ;
+
+#  $toemail     = 'billk@uidaho.edu' ;
+#  $toname      = 'Bill Kerr' ;
+  $toemail     = 'rperret@uidaho.edu' ;
+  $toname      = 'Robert Perret' ;
+  $bccemail    = 'billk@uidaho.edu' ;
+  $bccname     = 'Bill Kerr' ;
+
+  $title       = 'U of Idaho Library - Faculty Research Assistance Program Form' ;
+  $file_self   = $_SERVER['PHP_SELF'] ;
+  $file = basename($file_self);
+  $thanks   = $_REQUEST['thanks'] ;
+  $name     = trim($_REQUEST['name']) ;
+  $dept     = trim($_REQUEST['dept']) ;
+  $phone    = trim($_REQUEST['phone'])  ;
+  $email    = trim($_REQUEST['email']) ;
+  $question = trim($_REQUEST['question']) ;
+  $topic    = trim($_REQUEST['topic']) ;
+  $resource = trim($_REQUEST['resource']) ;
+  $times    = trim($_REQUEST['times']) ;
+  if ($thanks == 'y') {
+    if ($name == '') {
+      $name_error = '**Please enter your name' ;
+      $error = 'y' ;
+    }
+    if (($dept == '') || (strpos($dept, 'http:') > 0)) {
+      $dept_error = '**Please enter department' ;
+      $error = 'y' ;
+    }
+    if (($phone == '') || (strpos($phone, 'http:') > 0)) {
+      $phone_error = '**Please enter phone' ;
+      $error = 'y' ;
+    }
+    if (($times == '') || (strpos($times, 'http:') > 0)){
+      $times_error = ' **Please enter times for meeting  ' ;
+      $error = 'y' ;
+    }
+    if ((strpos($email, '@uidaho.edu') == 0) || ($email == '')) {
+      $email_error = '**Please enter a UofI Email' ;
+      $error = 'y' ;
+    }
+  }
+  if (($thanks == '') || ($error == 'y')) {
+  echo <<<INFORMATION
+<table border="0" cellpadding="5"><tr><td>		
+  
+  <a href="index.html">&lt; back to For Faculty and Instructors</a> 
+<h2>Faculty Research Assistance Program</h2>
+<p>U of Idaho faculty may schedule an appointment with a librarian to receive individualized assistance and consultation in our library.</p>
+<p>An appointment-based consultation is intended for in-depth analysis of your research question and instruction about using appropriate information resources.</p>
+<p>Librarians can consult with you on searching the library&rsquo;s catalog and online resources; creating effective research strategies; integrating information resources into specific courses, and designing effective library-based course assignments.</p>
+<p>Appointments will generally be made during the hours of 8 a.m. - 5 p.m., Monday - Friday, though special arrangements for other times may be made by mutual agreement. Please fill out the form below.</p>
+<p>Soon after you submit the form, a librarian will contact you to set up an appointment. Questions about the program can be directed to Robert Perret, University of Idaho Library, 885-6631, email: <a href="mailto:rperret@uidaho.edu">rperret@uidaho.edu</a></p>
+<FORM action="frap.html" method="POST">
+Please fill out as completely as possible. (* Denotes required fields)  
+<input type="hidden" name="thanks" value="y" />
+Name *: <input name="name" value="$name" size="30" />$name_error
+  
+Department *: <input name="dept" value="$dept" size="30" />$dept_error
+  
+Phone Number *: <input name="phone" value="$phone" size="20" />$phone_error
+  
+E-Mail Address *: <input name="email" value="$email" size="25" />$email_error
+  
+Question:
+ 
+<textarea name="question" rows="5" cols="43" wrap="HARD">$question</textarea>
+  
+Topic (Please be as specific as possible)</b>:
+ 
+<textarea name="topic" rows="2" cols="43" wrap="HARD">$topic</textarea>
+  
+Describe preferred resources (e.g. scholarly journal articles, online databases, print resources, Internet resources):
+ 
+<textarea name="resource" rows="2" cols="43" wrap="HARD">$resource</textarea>
+  
+What days and times would you be free to meet with a librarian?*
+ $times_error
+<textarea name="times" rows="2" cols="43" wrap="HARD">$times</textarea>
+  
+<input value="Submit Request" type="submit" />
+<input value="Clear Form" type="reset" />
+  Return printed versions of this form to UI Library Information/Reference Desk, 
+campus zip 2361.
+</FORM>
+  
+  </td>
+</tr></table>
+INFORMATION;
+ } else {
+    require("class.phpmailer.php") ;
+    $mail = new PHPMailer() ;
+    $mail->IsSMTP() ;
+    $mail->Host = "mx.uidaho.edu" ;
+    $mail->From = $email ;
+    $mail->FromName = $name ;
+    $mail->AddAddress($toemail, $toname) ;
+    $mail->AddBcc($bccemail, $bccname) ;
+    $mail->Subject = "Faculty Research Assistance Program" ;
+    $mail->WordWrap = 50;
+    $space = "   " ;
+    $email_body =               "Name:            "  . $name     . "\n" ;
+    $email_body = $email_body . "E-Mail Address:  "  . $email    . "\n" ;
+    $email_body = $email_body . "Phone Number:    "  . $phone    . "\n" ;
+    $email_body = $email_body . "Department:      "  . $dept     . "\n\n" ;
+    $email_body = $email_body . "Question:\n"        . $space . $question . "\n\n" ;
+    $email_body = $email_body . "Topic:\n"           . $space . $topic    . "\n\n" ;
+    $email_body = $email_body . "Resource:\n"        . $space . $resource . "\n\n" ;
+    $email_body = $email_body . "Times Available:\n" . $space . $times    . "\n\n" ;
+    $mail->Body = $email_body ;
+	print "<table width=\"500\">" ;
+	echo "<tr><td height=\"30\">" ;
+    if(!$mail->Send()) {
+      echo "Message was not sent   " ;
+      echo "Mailer Error: " . $mail->ErrorInfo ;
+      exit ;
+    } else {
+      echo "<center><span class=\"a3\">Your request for assistance has been sent.</span></center>" ;
+    }
+    echo "</td></tr>\n</table>\n" ;
+  }
+?>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- close audience1 and audience 2 -->
+    </div>
+  </div>
+</div>
+<!-- Start Footer -->
+<!--#include virtual="/footer.txt" -->
+<!-- End Footer -->
+<!-- Google Analytics -->
+<!--#include virtual="/google.txt" -->
+<!-- End Google Analytics -->
+
+<script src="/js/eventstracker.js"></script>
+<!-- Final Javascript Div --> <!--#include virtual="/js/final.js" -->  <!-- END Final Javascript--> </body>
+</html>

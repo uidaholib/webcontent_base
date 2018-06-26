@@ -1,0 +1,97 @@
+---
+title:
+layout: page
+---
+
+  
+  
+   
+       
+
+      
+ 
+      <div class="container pagecontent">
+
+  
+
+	 
+		
+
+
+	 
+	   
+	  	 
+			
+	<h2>Book Purchase Request Form</h2>
+	<p>All members of the University of Idaho community are encouraged to suggest additions. The Library will honor book requests as budgets permit and as the material is available.</p>
+		<ul style="margin-left: 15px;">
+			<li><p>Priority is given to materials which support the research and teaching programs of the university.</p></li>
+			<li><p>The appropriate <a href="/aboutus/liaisons.html">subject specialist</a> will review your request. Out-of-print books will be considered for purchase if they can be found at a reasonable cost.</p></li>
+			<li><p>Requests must be submitted at least 60 days before the time needed to allow for shipping and processing time. Out-of-print items and items ordered as pre-publications may take longer. <strong>If you need an item soon, use <a href="/resources/ill/index.html">Interlibrary Loan</a> to borrow a copy from another library.</strong></p></li>
+		</ul>
+	
+	 
+	<form method="post" id="bookRequest" name="bookRequest" style="background:#f5f5f5;padding:10px;" action="request.html" role="form">
+		
+		<input name="thanks" value="y" type="hidden">
+		<p>Please fill out as completely as possible. An asterisk (*) indidcates a required field.</p>
+		 
+		<input type="reset" id="requestReset" value="Clear Form" style="float:right;">
+		<fieldset>
+			<legend><h4>&nbsp;&nbsp;Personal Information&nbsp;&nbsp;</h4></legend>
+			<label for="yourName">Name*:</label><input id="yourName" name="name" value="" size="30" placeholder=" required"> 
+			<label for="yourDept">Department:</label><input id="yourDept" name="dept" value="" size="30"> 
+			<label for="yourStatus">Status:</label>
+				<select id="yourStatus" name="status">
+					<option selected="" value="Faculty">UI Faculty</option>
+					<option value="Student">UI Student</option>
+					<option value="Staff">UI Staff</option>
+				</select> 
+			<label for="yourEmail">U-Idaho Email*:</label> <input id="yourEmail" name="email" value="" size="25" placeholder=" required"> 
+			<label for="yourPhone">Phone:</label> <input id="yourPhone" name="phone" value="" size="20">  
+		</fieldset>
+		
+		<fieldset>
+			<legend><h4>&nbsp;&nbsp;Item Information&nbsp;&nbsp;</h4></legend>
+			<label for="itemAuthor">Author(s)*:</label> <input id="itemAuthor" name="author" value="" size="48" placeholder=" required"> 
+			<label for="itemTitle">Title*:</label> <textarea id="itemTitle" name="title" rows="2" cols="43" wrap="HARD" placeholder=" required"></textarea> 
+			<label for="itemVolume">Volume/Edition:</label> <input id="itemVolume" name="edition" value="" size="5"> 
+			<label for="itemYear">Year Published:</label> <input id="itemYear" name="pubyear" value="" size="5"> 
+			<label for="itemPublisher">Publisher:</label> <input id="itemPublisher" name="publisher" value="" size="36"> 
+			<label for="itemISBN">ISBN/ISSN:</label> <input id="itemISBN" name="number" value="" size="21"> 
+			<label for="itemOther">Other Information:</label> <textarea id="itemOther" name="other_info" rows="2" cols="43" wrap="HARD"></textarea>
+		</fieldset>
+		 
+		<div class="itemQuestions" style="margin-left: 25px;">
+			<strong>Preferred format?</strong>
+				<label for="itemFormatHard">Print</label> <input type="radio" id="itemFormatHard" name="format" value="hardcover" checked="checked">
+				<label for="itemFormatEbook">Ebook/Electronic</label> <input type="radio" id="itemFormatEbook" name="format" value="ebook">
+			  
+			<strong>Do you want this item held for you?</strong><a id="popover2"  data-container="body" data-toggle="popover" data-placement="top" data-content="Students and staff who request a hold will be notified when the item is ready to be checked out from the library�s circulation desk, and the item will be placed on the Library�s hold shelf for pickup. Faculty who request a hold will receive the item at their campus address via campus mail unless they have specifically requested that holds be handled in a different way. All media items (DVDs, CDs, etc.) are placed on the Library�s hold shelf for pickup and not sent through campus mail." style="color:#962676;cursor:pointer;font-size:12px;margin-top:-4px; padding-left:6px;" data-original-title="" title="">
+  <span class="glyphicon glyphicon-question-sign"></span>
+</a>	
+				<label for="itemHeld">Yes</label> <input type="radio" id="itemHeld" name="hold" value="hold" checked="checked"> 
+			
+				<label for="itemNeither">No</label> <input type="radio" id="itemNeither" name="hold" value="no">
+				
+			
+			  
+			You will be notified by email when the item arrives.   
+		</div>
+		<input type="submit" value="Submit Request" class="pull-right">
+		  
+	</form>
+	
+
+               
+           
+          
+			
+                      
+                  </div>
+</div>
+
+											
+											
+											
+											

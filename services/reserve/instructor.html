@@ -1,0 +1,129 @@
+---
+title:
+layout: page
+---
+
+  
+  
+ 
+
+
+
+
+      <div class="container pagecontent" id="scrollnav"> 
+	  
+  <h1 style="margin-top:0px;">Course Reserves</h1>
+  <p><small>Course Reserves, listed below by instructor, are electronic and library-only resources provided by the instructor to supplement the course textbook(s).</small></p>
+ <div style="text-align:center;">
+ <h4 >Browse by Instructor</h4>
+ <p style="font-size: 17px">
+<?php 
+/* This grabs the information from the reserve.csv file and displays it sorted by instructor name */
+/* The reserve.csv has two columns seperated by a |, so the person who edits the file must have that */
+/* setup as there system delimiter when creating csv files. */
+  function make_comparer() {
+    // Normalize criteria up front so that the comparer finds everything tidy
+    $criteria = func_get_args();
+    foreach ($criteria as $index => $criterion) {
+        $criteria[$index] = is_array($criterion)
+            ? array_pad($criterion, 3, null)
+            : array($criterion, SORT_ASC, null);
+    }
+    return function($first, $second) use (&$criteria) {
+        foreach ($criteria as $criterion) {
+            // How will we compare this round?
+            list($column, $sortOrder, $projection) = $criterion;
+            $sortOrder = $sortOrder === SORT_DESC ? -1 : 1;
+            // If a projection was defined project the values now
+            if ($projection) {
+                $lhs = call_user_func($projection, $first[$column]);
+                $rhs = call_user_func($projection, $second[$column]);
+            }
+            else {
+                $lhs = $first[$column];
+                $rhs = $second[$column];
+            }
+            // Do the actual comparison; do not return if equal
+            if ($lhs < $rhs) {
+                return -1 * $sortOrder;
+            }
+            else if ($lhs > $rhs) {
+                return 1 * $sortOrder;
+            }
+        }
+        return 0; // tiebreakers exhausted, so $first == $second
+    };
+}
+  if (trim($_REQUEST['letter']) == '') // default to displaying A if no 'letter' was passed.
+    { 
+      $letter = 'A' ;
+    } else {
+      $letter = trim($_REQUEST['letter']) ;
+    }
+  $row = 0;
+  if(($handle = fopen("reserve.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, "|")) != FALSE) {
+      $array[$row] = $data ;
+      $row++;
+    }
+  }
+    fclose($handle);
+    usort ($array, make_comparer(1)) ; // 1 = sort on the second numerically indexed column
+    $instructor = "" ;
+    for ($rcount = 0 ; $rcount < $row ; $rcount++) {
+      if ($letter == substr($array[$rcount][1],0,1)) {
+        if ($instructor !== rtrim($array[$rcount][1])) {
+          $instructor = rtrim($array[$rcount][1]) ;
+          echo "<b><a href=\"https://search.lib.uidaho.edu/primo-explore/search?query=any,contains," . $instructor . ",AND&tab=reserves&search_scope=course_reserves&sortby=rank&vid=UID&mode=advanced&offset=0\">" . $instructor . "</a></b> \n" ;
+        }
+      }
+    }
+    
+    
+?>
+
+ </div>
+<!-- /reserve_lists --> 
+ 
+<p><small>All electronic files will appear at the top of the list. You may need a password (supplied by your instructor) to access electronic files. </small></p>
+ 	
+<div class="row">
+<div class="col-md-6">
+<div class="panel panel-default ">
+<div class="panel-heading">
+<h3 class="panel-title">Related Links</h3>
+</div>
+<div class="panel-body">
+<ul>
+<li><a href="http://www.uidaho.edu/schedule/">Course Times/Location</a></li>
+<li><a href="http://www.uidaho.edu/registrar/classes/finals">Final Exams</a></li>
+<li><a href="http://www.vandalstore.com/SelectTermDept.aspx">Textbook</a></li>
+<li><a href="http://www.uidaho.edu/studentaffairs/asap">Tutoring and Academic Assistance Programs</a></li>
+<li><a href="http://www.uidaho.edu/class/english/writingcenter">Writing Center</a></li>
+<li><a href="/help/rap.html">Get Help With Research</a></li>
+</ul>
+  </div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="panel panel-default ">
+<div class="panel-heading">
+<h3 class="panel-title">Instructor Information</h3>
+</div>
+<div class="panel-body">
+<ul>
+<li><a href="policies.html">Reserve policies</a></li>
+<li><a href="request.html"><u><b>Reserve request form</b></u></a></li>
+<li><a href="howto.html#inlib">How to put materials on in-library reserve</a></li>
+<li><a href="howto.html#electronic">How to put materials on Electronic reserve</a></li>
+<li><a href="swank.html">Swank Motion Pictures (streaming video)</a></li>
+<li><a href="fairuse.html">Copyright and fair use</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="/pdf/studentMaterialsPermission.pdf" target="_blank">Permission to use student papers</a> [PDF]</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

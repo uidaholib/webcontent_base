@@ -1,0 +1,173 @@
+---
+title:
+layout: page
+--- 
+
+<!-- header -->
+<body>
+<p class="hide"><a href="#content">Skip navigation</a>.</p>
+<div id="pagewrapper1" class="level2">
+  <div id="pagewrapper2" class="UImoss">
+    <div id="banner">
+      <div id="bannertop">
+        <div id="bannerleft"><a href="/index.html" title="University of Idaho Library"><img id="ctl00_imgLogo" src="/images/library_logo.gif" alt="University of Idaho Library" style="border-width:0px;" /></a></div>
+        <div id="bannerright">
+          <p><a href="http://www.uidaho.edu/" title="A-Z Index">UNIVERSITY OF IDAHO HOME</a></p>
+        </div>
+      </div>
+      <!-- --> 
+      <!-- navigation bar -->
+      <div id="globalnav1">
+        <div id="globalnav2">
+          <div id="globalnav3"> 
+            <!-- Global Navigation - services --> 
+            <!--#include virtual="/old/nav_services.txt" --> 
+            <!-- Global Navigation - services --> 
+          </div>
+        </div>
+      </div>
+      <div id="bannerbottom1">
+        <div id="bannerbottom2"> </div>
+      </div>
+    </div>
+    <!-- --> 
+    <!-- left navigation -->
+    <div id="audience1" class="twocolumn">
+      <div id="audience2">
+        <div id="audienceleft1">
+          <ul id="udm" class="udm" style="position:relative; z-index: 1;">
+            <li class="onclick(true)" title="Library Services" id="services"><a href="/services/index.html">Library Services</a></li>
+            <li class="onclick(true)" title="Information about Borrowing and Renewing Books" id="borrow"><a href="/services/borrow/index.html">Borrow/Renew</a></li>
+            <li class="onclick(true)" title="Course Reserve" id="reserve"><a href="/services/reserve/index.html">Course Reserve</a></li>
+            <li class="onclick(true)" title="Interlibrary Loan" id="ILL"><a href="/services/ill/index.html">Interlibrary Loan</a></li>
+            <li class="onclick(true)" title="Instruction and Tours" id="instruction"><a href="/services/instruction.html">Tours</a></li>
+            <li class="onclick(true)" title="Research Guides and Tutorials" id="guides"><a href="/classes/guides.html">Research Guides</a></li>
+          </ul>
+          <div id="audiencenavleft2"> 
+            <!-- Ask Us Menu--> 
+            <!--#include virtual="/askus.txt" --> 
+            <!-- Ask Us Menu --> 
+          </div>
+        </div>
+        <!-- -->
+        <div id="audienceright1">
+          <div class="audiencerightsection1">
+            <div class="audiencerightcol1">
+              <?php
+  require ("library.inc.php") ;
+  
+  $title       = 'U of Idaho Library - Student Research Assistance Program' ;
+#  print_head_info($title) ;
+  $file_self   = $_SERVER['PHP_SELF'] ;
+  $file = basename($file_self);
+  $today = date("m-d-Y"); 
+  $librarian_error  = 'n' ;
+  $error            = 'n' ;
+  $email = "libweb@uidaho.edu" ;
+  $thanks           = $_REQUEST['thanks'] ;
+  $librarian        = trim($_REQUEST['librarian']) ;
+  $rap_helpful      = trim($_REQUEST['rap_helpful']) ;
+  $rap_recommend    = trim($_REQUEST['rap_recommend']) ;  
+  $rap_aspect       = trim($_REQUEST['rap_aspect']) ;
+  $rap_improve      = trim($_REQUEST['rap_improve']) ;
+  $rap_not_helpful  = trim($_REQUEST['rap_not_helpful']) ;
+  if ($thanks == 'y') {
+    if (($librarian == '') || (strpos($librarian, 'http:') > 0)) {
+      $librarian_error = 'y' ;
+      $error = 'y' ;
+    }
+  }
+  if (($thanks == '') || ($error == 'y')) {
+echo <<<INFORMATION
+<table border="0"><tr><td width="600">		
+<a href="classes.html">&lt; back to Library Instruction for Students</a>  
+  <h2>Research Assistance Program (RAP) Survey</h2>
+  
+  
+<strong>Fields marked with an "*" are required.</strong><FORM action="rapsurvey.html" method="GET">
+<input type="hidden" name="thanks" value="y">
+<TABLE border="0">
+<TR>
+<TD>Librarian *: &nbsp;&nbsp;<INPUT type="text" size="40" name="librarian" value="$librarian">  
+Did you find this RAP session helpful for finding the information you needed?  
+<input type="radio" name="rap_helpful" value="Yes, helpful" /> Yes, helpful 
+<input type="radio" name="rap_helpful" value="Yes, somewhat helpful" /> Yes, somewhat helpful 
+<input type="radio" name="rap_helpful" value="Yes, helpful, although not the information I asked for" /> Yes, helpful, although not the information I asked for 
+<input type="radio" name="rap_helpful" value="No, not very helpful" /> No, not very helpful&nbsp;&nbsp;&nbsp; Why not? <input type="text" name="rap_not_helpful" size="50" value="$rap_not_helpful">  
+Would you recommend RAP to other students?  
+<input type="radio" name="rap_recommend" value="Yes" /> Yes 
+<input type="radio" name="rap_recommend" value="Maybe" /> Maybe 
+<input type="radio" name="rap_recommend" value="No" /> No  
+What was the most helpful aspect of this RAP session?  
+<TEXTAREA name="rap_aspect" rows="4" cols="60">$rap_aspect</TEXTAREA>  
+How can RAP be improved?  
+<TEXTAREA name="rap_improve" rows="4" cols="60">$rap_improve</TEXTAREA>  
+</TD>
+</TR>
+</TABLE>
+<TABLE border="0">
+<TR>
+<TD><INPUT type="submit" value="Submit"></TD>
+<TD></TD>
+<TD><INPUT type="reset" value="Clear Form"></TD>
+</TR>
+</TABLE>
+</FORM>
+ Return printed versions of this form to UI Library Information/Reference Desk, 
+campus zip 2361.
+ 
+  </p>
+
+  </td>
+</tr></table>
+INFORMATION;
+} else {
+    require("class.phpmailer.php") ;
+    $mail = new PHPMailer() ;
+    $mail->IsSMTP() ;
+    $mail->Host = "mx.uidaho.edu" ;
+    $mail->From = $email ;
+    $mail->FromName = $name ;
+    $mail->AddAddress("nsprague@uidaho.edu") ;
+	$mail->AddBcc("billk@uidaho.edu") ;
+    $mail->Subject = "Student Research Assistance Program Survey" ;
+    $mail->WordWrap = 50;
+    $space = "   " ;
+    $email_body =               "Date:                  "  . $today       . "\n" ;
+    $email_body = $email_body . "Librarian:             "  . $librarian   . "\n" ;
+    $email_body = $email_body . "Did you find this RAP session helpful for finding the information you needed ?\n"  . $rap_helpful . "\n\n" ;
+    $email_body = $email_body . "Why not:               "  . $rap_not_helpful . "\n\n" ;
+    $email_body = $email_body . "Would you recommend RAP to other students? "  . $rap_recommend    . "\n" ;
+    $email_body = $email_body . "What was the most helpful aspect of this RAP session?\n  "  . $rap_aspect  . "\n\n" ;
+    $email_body = $email_body . "How can RAP be improved?\n"  . $rap_improve   . "\n" ;
+    $mail->Body = $email_body ;
+	print "<table width=\"500\">" ;
+	echo "<tr><td height=\"30\">" ;
+    if(!$mail->Send()) {
+      echo "Message was not sent <p>" ;
+      echo "Mailer Error: " . $mail->ErrorInfo ;
+      exit ;
+    } else {
+      echo "<center><h3>Your request for assistance has been sent.</h3></center>" ;
+    }
+    echo "</td></tr>\n</table>\n" ;
+  }
+?>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- close audience1 and audience 2 --> 
+    </div>
+  </div>
+</div>
+<!-- Start Footer --> 
+<!--#include virtual="/footer.txt" --> 
+<!-- End Footer --> 
+<!-- Google Analytics --> 
+<!--#include virtual="/google.txt" --> 
+<!-- End Google Analytics -->
+
+<script src="/js/eventstracker.js"></script>
+<!-- Final Javascript Div --> <!--#include virtual="/js/final.js" -->  <!-- END Final Javascript--> </body>
+</html>

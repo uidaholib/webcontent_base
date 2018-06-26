@@ -1,0 +1,166 @@
+---
+title:
+layout: page
+---
+
+  
+  
+		                         
+		
+	
+    <div class="container pagecontent" id="scrollnav">
+		<div  id="inline1" style="display:none;width:500px; height:350px;font-size:16px;text-align:left;">
+			<h3>Directions:</h3> 
+			<hr/>
+				<p>To browse the entire database, <a target="_blank" href="https://www.google.com/fusiontables/DataSource?docid=1lYtLtodaMlzmbyis2IWuwAgjVBvhuXX-PYNXyaw">click here</a>.</p>
+				<p>For more information and more tools for checking out DVDS at the Universiy of Idaho Library, <a target="_blank"href="http://libguides.uidaho.edu/dvd">click here</a>.</p>
+		</div><!-- /inline -->
+		 
+	
+	<div class="row"> <!-- Four Counts Row -->
+		<div class="col-md-3">
+			<div class="panel panel-default ">
+				<div class="panel-heading">
+					<h3 class="panel-title">Faculty</h3>
+				</div>
+				<div class="panel-body">
+					<div id="example" class="numberlist" style=" display: inline-block;"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="panel panel-default ">
+				<div class="panel-heading">
+					<h3 class="panel-title">Number of Departments</h3>
+				</div>
+				<div class="panel-body">
+					<div id="example1" class="numberlist" style=" display: inline-block;list-style:none"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="panel panel-default ">
+				<div class="panel-heading">
+					<h3 class="panel-title">Number of Academic Articles</h3>
+				</div>
+				<div class="panel-body">
+					<div id="example2" class="numberlist" style=" display: inline-block;list-style:none"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="panel panel-default ">
+				<div class="panel-heading">
+					<h3 class="panel-title">Number of Grants</h3>
+				</div>
+				<div class="panel-body">
+					<div id="example3" class="numberlist" style=" display: inline-block;"></div>
+				</div>
+			</div>
+		</div>
+	</div><!-- end row -->
+	
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default ">
+				<div class="panel-heading">
+					<h3 class="panel-title">Recent Academic Articles (since 2011)</h3>
+				</div>
+				<div class="panel-body">
+					<div id="example4" style=" display: inline-block;list-style:none"></div>
+				</div>
+			</div>
+		</div>
+	
+	
+<div class="col-md-4">
+<div class="panel panel-default ">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Grants (Since 2011)</h3>
+  </div>
+  <div class="panel-body">
+ <div id="example5"
+     data-sgvizler-endpoint="http://vivo.nkn.uidaho.edu:3030/VIVO/query"
+     data-sgvizler-query="SELECT DISTINCT ?grant ?name (year(?date) as ?dateyear)
+WHERE {
+FILTER (?o = <http://vivo.nkn.uidaho.edu/individual/n13549>) .
+?o obo:BFO_0000051 ?p .
+?p vivo:relatedBy ?b .
+?b vivo:relates ?a .
+        ?a rdf:type foaf:Person .
+        ?a vivo:relatedBy ?grant .
+		?grant a vivo:Grant .
+		?grant rdfs:label ?name .
+		?grant vivo:dateTimeInterval ?datetimeinterval .
+		?datetimeinterval vivo:start ?datetime .
+		?datetime vivo:dateTime ?date .
+		FILTER (?date > '2010-12-31T00:00:00'^^xsd:dateTime ) .
+		
+}
+ORDER BY DESC(?date)
+                         "
+            data-sgvizler-chart="sgvizler.visualization.Textgrant"
+	  data-sgvizler-chart-options="list=ul|cellSep= "
+   style=" display: inline-block;list-style:none"
+     ></div>
+  </div>
+</div>
+
+
+					
+					
+					
+					
+				</div>
+				
+				<div class="col-md-4">
+<div class="panel panel-default ">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Presentations (Since 2011)</h3>
+  </div>
+  <div class="panel-body">
+ <div id="example10"
+     data-sgvizler-endpoint="http://vivo.nkn.uidaho.edu:3030/VIVO/query"
+     data-sgvizler-query="SELECT DISTINCT ?prez ?prezname ?conf (year(?date) as ?dateyear)
+WHERE {
+FILTER (?o = <http://vivo.nkn.uidaho.edu/individual/n13549>) .
+?o obo:BFO_0000051 ?p .
+?p vivo:relatedBy ?b .
+?b vivo:relates ?a .
+        ?a rdf:type foaf:Person .
+           ?a obo:RO_0000053 ?role .
+            ?role obo:BFO_0000054 ?prez .
+?prez a vivo:Presentation .
+?prez rdfs:label ?prezname .
+?prez obo:BFO_0000050 ?venue .
+?venue rdfs:label ?conf .
+?role vivo:dateTimeInterval ?datetimeinterval .
+		?datetimeinterval vivo:start ?datetime .
+		?datetime vivo:dateTime ?date .
+		FILTER (?date > '2010-12-31T00:00:00'^^xsd:dateTime ) .
+		
+}
+ORDER BY DESC(?date)
+
+                         "
+            data-sgvizler-chart="sgvizler.visualization.Textmod"
+	  data-sgvizler-chart-options="list=ul|cellSep= "
+   style=" display: inline-block;list-style:none"
+     ></div>
+  </div>
+</div>
+</div>
+
+
+					
+					
+					
+					
+				</div>
+			</div>
+</div>
+
+											
+											
+											
+										

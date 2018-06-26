@@ -1,0 +1,192 @@
+---
+title:
+layout: page
+--- 
+
+<!-- -->
+<!-- header -->
+<body>
+<p class="hide"><a href="#content">Skip navigation</a>.</p>
+<div id="pagewrapper1" class="level2">
+  <div id="pagewrapper2" class="UImoss">
+    <div id="banner">
+      <div id="bannertop">
+        <div id="bannerleft"><a href="/index.html" title="University of Idaho Library"><img id="ctl00_imgLogo" src="/images/library_logo.gif" alt="University of Idaho Library" style="border-width:0px;" /></a></div>
+        <div id="bannerright">
+          <p><a href="http://www.uidaho.edu/" title="A-Z Index">UNIVERSITY OF IDAHO HOME</a></p>
+        </div>
+      </div>
+      <!-- -->
+      <!-- navigation bar -->
+      <div id="globalnav1">
+        <div id="globalnav2">
+          <div id="globalnav3"> 
+            <!-- Global Navigation - services --> 
+            <!--#include virtual="/old/nav_services.txt" --> 
+            <!-- Global Navigation - services --> 
+          </div>
+        </div>
+      </div>
+      <div id="bannerbottom1">
+        <div id="bannerbottom2"> </div>
+      </div>
+    </div>
+    <!-- -->
+    <!-- left navigation -->
+    <div id="audience1" class="twocolumn">
+      <div id="audience2">
+        <div id="audienceleft1">
+          <ul id="udm" class="udm" style="position:relative; z-index: 1;">
+            <li class="onclick(true)" title="Library Services" id="services"><a href="/services/index.html" class="udmY">Library Services</a></li>
+            <li class="onclick(true)" title="Information about Borrowing and Renewing Books" id="borrow"><a href="/services/borrow/index.html">Borrow/Renew</a></li>
+            <li class="onclick(true)" title="Course Reserve" id="reserve"><a href="/services/reserve/index.html">Course Reserve</a></li>
+            <li class="onclick(true)" title="Interlibrary Loan" id="ILL"><a href="/services/ill/index.html">Interlibrary Loan</a></li>
+            <li class="onclick(true)" title="Instruction and Tours" id="instruction"><a href="/services/instruction.html">Tours</a></li>
+            <li class="onclick(true)" title="Research Guides and Tutorials" id="guides"><a href="/classes/guides.html">Research Guides</a></li>
+          </ul>
+          <div id="audiencenavleft2">
+            <!-- Ask Us Menu-->
+            <!--#include virtual="/askus.txt" -->
+              <!-- Ask Us Menu -->
+          </div>
+        </div>
+        <!-- -->
+        <div id="audienceright1">
+          <div class="audiencerightsection1">
+            <div class="audiencerightcol1">
+              <table border="0" cellpadding="5">
+                <tr>
+                  <td>
+                    <h3>Course Instructor Evaluation of Library Instruction Session</h3>
+                    <table width="500">
+                      <tr>
+                        <td colspan="2"><?php
+  require ("library.inc.php") ;
+
+  $fromemail   = 'libweb@uidaho.edu' ;
+  $fromname    = 'Library Webmaster' ;
+  $toemail     = 'prorak@uidaho.edu' ;
+  $toname      = 'Diane Prorak' ;
+  $bccemail    = 'billk@uidaho.edu' ;
+  $bccname     = 'Bill Kerr' ;
+
+  $file_self   = $_SERVER['PHP_SELF'] ;
+  $file = basename($file_self);
+  $coursename_error  = 'n' ;
+  $semester_error    = 'n' ;
+  $thanks   = $_REQUEST['thanks'] ;
+  $coursename_num  = trim($_REQUEST['coursename_num']) ;
+  $semester_year   = trim($_REQUEST['semester_year']) ;
+  $comment_1       = trim($_REQUEST['comment_1'])  ;
+  $comment_2       = trim($_REQUEST['comment_2']) ;
+  $comment_3       = trim($_REQUEST['comment_3']) ;
+  $comment_4       = trim($_REQUEST['comment_4']) ;
+  $comment_5       = trim($_REQUEST['comment_5']) ;
+  $librarian       = trim($_REQUEST['librarian']) ;
+  if ($thanks == 'y') {
+    if ($coursename_num == '') {
+      $coursename_error = 'y' ;
+      $error = 'y' ;
+    }
+    if (($semester_year == '') || (strpos($dept, 'http:') > 0)) {
+      $semester_error = 'y' ;
+      $error = 'y' ;
+    }
+  }
+  if (($thanks == '') || ($error == 'y')) {  
+    print "<table width=\"500\">" ;
+    echo "<tr><td colspan=\"2\">" ;
+
+    echo "<FORM action=\"eval.html\" method=\"POST\">" ;
+    echo "<input type=\"hidden\" name=\"thanks\" value=\"y\">" ;
+    echo "<HR size=\"1\"  noshade>" ;
+    echo "<STRONG>Please fill out as completely as possible. (* Denotes required fields)</STRONG>" ;
+    echo " " ;
+    echo "Course name and number *: <INPUT name=\"coursename_num\" value=\"$coursename_num\" size=\"30\">" ;
+    if ($coursename_error == 'y') {
+      echo " <strong>Please enter your course name and number</strong>" ;
+    }
+    echo " \n" ;
+    echo "Semester and year (e.g. Fall 2013) *: <INPUT name=\"semester_year\" value=\"$semester_year\" size=\"30\">" ;
+    if ($dept_error == 'y') {
+      echo " <strong>Please enter semester and year</strong>" ;
+    }
+    echo " \n" ;
+    echo "Librarian's name : <INPUT name=\"librarian\" value=\"$librarian\" size=\"30\">" ;
+    if ($coursename_error == 'y') {
+      echo " <strong>Please enter librarians name</strong>" ;
+    }
+    echo " \n" ;
+    echo '<HR size="1"  noshade>' ;
+    echo "<ul>\n" ;
+    echo '<li>In your observation, how did your students benefit from the library session(s)?: ' ;
+    echo "<TEXTAREA name=\"comment_1\" rows=\"5\" cols=\"43\" wrap=\"HARD\">$comment_1</TEXTAREA></li>\n" ;
+    echo "<li>If your class completed a research paper or project that required outside sources, do you feel that the quality of sources used in their bibliographies were better because of the library session?  If possible, please give examples: \n";
+    echo "<TEXTAREA name=\"comment_2\" rows=\"2\" cols=\"43\" wrap=\"HARD\">$comment_2</TEXTAREA></li>" ;
+    echo "<li>If any web content (such as a LibGuide) was created specifically for your class, please comment on its usefulness for you and your students. \n" ;
+    echo "<TEXTAREA name=\"comment_3\" rows=\"2\" cols=\"43\" wrap=\"HARD\">$comment_3</TEXTAREA></li>" ;
+    echo "<li>What do you think still confuses your students about using library-based information sources? \n" ;
+    echo "<TEXTAREA name=\"comment_4\" rows=\"2\" cols=\"43\" wrap=\"HARD\">$comment_4</TEXTAREA></li>" ;
+    echo "<li>What suggestions might you have for future library sessions? \n" ;
+    echo "<TEXTAREA name=\"comment_5\" rows=\"2\" cols=\"43\" wrap=\"HARD\">$comment_5</TEXTAREA></li></ul>" ;
+    echo '<HR size="1"  noshade>' ;
+    echo '<INPUT type="submit" value="Submit Request"> <INPUT type="reset" value="Clear Form">' ;
+    echo '<HR noshade size="1" >' ;
+    echo '</FORM></span></td></tr></table>' ;
+  } else {
+    require("class.phpmailer.php") ;
+    $mail = new PHPMailer() ;
+    $mail->IsSMTP() ;
+    $mail->Host = "mx.uidaho.edu" ;
+    $mail->From = $fromemail ;
+    $mail->FromName = $fromname ;
+    $mail->AddAddress($toemail, $toname) ;
+    $mail->AddBcc($bccemail, $bccname) ;
+    $mail->Subject = "Course Instructor Evaluation of Library Instruction session" ;
+    $mail->WordWrap = 50;
+    $email_body =               "Course name and number:   "  . $coursename_num     . "\n" ;
+    $email_body = $email_body . "Semester and year:        "  . $semester_year    . "\n\n" ;
+    $email_body = $email_body . "Librarian:                "  . $librarian        . "\n\n" ;
+    $email_body = $email_body . "Comments\n" ;
+    $email_body = $email_body . "1. In your observation, how did your students benefit from the library session(s)?\n\n" . $comment_1 . "\n\n" ;
+    $email_body = $email_body . "2. Do you feel that the quality of sources students found were better because of the library session?  If possible, please give examples.\n\n" . $comment_2  . "\n\n" ;
+    $email_body = $email_body . "3.	If any web content (such as a LibGuide) was created specifically for your class, please comment on its usefulness for you and your students.\n\n" . $comment_3 . "\n\n" ;
+    $email_body = $email_body . "4.	What do you think still confuses your students about using library-based information sources?\n\n" . $comment_4 . "\n\n" ;
+    $email_body = $email_body . "5.	What suggestions might you have for future library sessions?\n\n" . $comment_5   . "\n\n" ;
+    $mail->Body = $email_body ;
+	print "<table width=\"500\">" ;
+	echo "<tr><td height=\"30\">" ;
+    if(!$mail->Send()) {
+      echo "Message was not sent " ;
+      echo "Mailer Error: " . $mail->ErrorInfo ;
+      exit ;
+    } else {
+      echo "<center><h3>Thanks for your input.</h3></center>" ;
+    }
+    echo "</td></tr>\n</table>\n" ;
+  }
+#  print_footer_info ($file) ;
+?>
+                        </td>
+                      </tr>
+                    </table></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- close audience1 and audience 2 -->
+  </div>
+</div>
+<!-- Start Footer -->
+<!--#include virtual="/footer.txt" -->
+<!-- End Footer -->
+<!-- Google Analytics -->
+<!--#include virtual="/google.txt" -->
+<!-- End Google Analytics -->
+
+<script src="/js/eventstracker.js"></script>
+<!-- Final Javascript Div --> <!--#include virtual="/js/final.js" -->  <!-- END Final Javascript--> </body>
+</html>

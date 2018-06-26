@@ -1,0 +1,131 @@
+---
+title:
+layout: page
+---
+
+  
+  
+   
+      
+   
+    
+   
+ 
+    <div class="container pagecontent">
+	
+     	
+    
+<div class="row">
+	<div class="col-md-8">
+	<h2>Databases by Subject</h2>
+	</div>
+	<div class="col-md-4">
+	
+ <form style="margin-top:10px;">
+                        <select size="1" onchange="window.location.href=this.value" style="font-size:13px; ">
+                                                <option selected="selected" value="#" >Select a different subject</option>
+<?php
+    $db = new PDO('mysql:host=localhost;dbname=onlinedatabases;charset=utf8','dbuser','data98');
+    $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
+	try {
+        $results = $db->query("SELECT * FROM sinfo ORDER by title") ;
+    } catch (PDOException $e) {
+        echo "Error accessing database" ;
+    }
+    $snum    = $results->rowcount() ;
+	$titlelist = $results->fetchAll(PDO::FETCH_ASSOC);
+    $scount  = 0 ;
+    while ($scount < $snum) {
+        $title  = $titlelist[$scount]['title'] ;
+        $id     = $titlelist[$scount]['sinfo_ID'];
+        
+        if ($id <> 1) {
+	       if ($title <> 'None') {  # Don't want to display the None group if it exists
+		        print "            <option value=\"database_display.html?subject=$id&amp;disptype=S\">$title</option>\n" ;
+		    }
+	    }
+	    $scount++ ;
+	}
+?>
+                                              </select>
+											  </br >
+											  </br >
+</form>  
+</div>
+</div>
+<?php # Find Articles - Database Display
+    $db = new PDO('mysql:host=localhost;dbname=onlinedatabases;charset=utf8','dbuser','data98');
+    $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
+	# variables passed from articles.html
+    $disptype  = $_REQUEST['disptype'] ;
+    $subject   = $_REQUEST['subject'] ;
+    $letter    = $_REQUEST['letter'] ;
+    try {
+        $results = $db->prepare("SELECT * FROM sinfo WHERE (sinfo_ID = ?) ORDER by sinfo_ID") ;
+		$results->bindValue(1,$subject,PDO::PARAM_STR) ;
+		$results->execute() ;
+    } catch (PDOException $e) {
+        echo "Error accessing database" ;
+    }
+	$stitles = $results->fetchAll(PDO::FETCH_ASSOC);
+	$stitle = $stitles[0]['title'];
+	try {
+        $dresults = $db->prepare("SELECT * FROM relation, dinfo WHERE (relation.sinfo_ptr = ?) and (relation.dinfo_ptr = dinfo.dinfo_ID) ORDER by dinfo.title") ;
+		$dresults->bindValue(1,$subject,PDO::PARAM_INT) ;
+		$dresults->execute() ;
+    } catch (PDOException $e) {
+        echo "Error accessing database" ;
+    }
+	$dnum    = $dresults->rowcount() ;
+	$dlist   = $dresults->fetchAll(PDO::FETCH_ASSOC);
+	$popoverscript = '<script type="text/javascript"> $(document).ready(function(){ ' ;
+	if ($dnum <> 0) {
+		$dcount  = 0 ;
+		$htitle = '<h3 style="margin:0px 0px 0px 3%;" >' . $stitle . '</h3>';
+		$table = '<table style="width:600px">';
+	    print "$htitle \n$table" ;
+		while ($dcount < $dnum) {
+		    $dtitle   = $dlist[$dcount]['title'] ;
+			$dtitle   = stripslashes($dtitle) ;
+			$URL      = $dlist[$dcount]['URL'] ;
+			$fulltext = $dlist[$dcount]['full_text'] ;
+			$access   = $dlist[$dcount]['access'] ;
+			$dinfo_ID = $dlist[$dcount]['dinfo_ID'] ;
+			$popular  = $dlist[$dcount]['popular'] ;
+			$info     = $dlist[$dcount]['info'] ;
+			$shortinfo = substr($dlist[$dcount]['info'],0,60) ;
+#			$info     = stripslashes($info) ;
+			$coverage = $dlist[$dcount]['coverage'] ;
+			$users    = $dlist[$dcount]['users'] ;
+			$fulltext = $dlist[$dcount]['full_text'] ;
+			$publisher = $dlist[$dcount]['publisher'] ;
+			$URL      = urldecode($URL) ;
+			
+			if ($URL == 'In Library') {
+				print "$dtitle\n" ;
+			} else {
+				print "<tr><td style=\"padding-right:3%\"><a type=\"button\" class=\"btn btn-default database-button \" href=\"$URL\">$dtitle</a></td>\n" ;
+			}			
+			$idnumber = 'popover' . $dcount ;
+			$popoverscript = $popoverscript . ' $("#' . $idnumber . '").popover(); ' ;
+			if ($users == 0) { $users = 'Unlimited' ; }
+			if ($access == 'U') { $access = 'UI Only' ; } else { $access = 'Unrestricted' ; } 
+			if ($fulltext == 'F') { $fulltext = 'Fulltext' ; }
+			print "<td><a id=\"$idnumber\" style=\"font-size:smaller;\" class=\"pull-left hidden-sm hidden-xs instructions smalltxt\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"right\" data-html=\"true\" data-original-title=\"<strong>$dtitle Info</strong>\" data-content=\"";
+#			print "<p><strong>$dtitle</strong> " ;
+			print "<p>$info <strong>Coverage:</strong> $coverage <strong>Users:</strong> $users <strong>Access type:</strong> $access $fulltext <strong>Publisher:</strong> $publisher \"></p>" ;
+            print " <span class=\"glyphicon glyphicon-info-sign\"></span></a></td></tr>\n" ;
+			
+			$dcount++ ; 
+		}
+
+	}
+	$popoverscript = $popoverscript . ' }); </script> ' ;
+#	print $popoverscript ;
+?>
+     </table>
+    </div>
+</div>
+        

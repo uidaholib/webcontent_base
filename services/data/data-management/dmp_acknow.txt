@@ -1,0 +1,7 @@
+<div id="credits" style="postion: relative; bottom: 55px; float: left;">
+<hr />
+<p class="redlink">
+	<small><a href="./acknowledgements.html" style="font-weight: normal;">Page Acknowledgements.</a> 
+	<a href="./contact.html" style="font-weight: normal;">Contact Us</a> with any comments.</small> 
+	<a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license"><img src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" style="border-width: 0pt; " alt="Creative Commons License"> </a></p>
+</div><!-- /credits -->
